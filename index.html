@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guía del apoderado 29N</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* Idea: una columna para el móvil. Dos bloques (lo esencial / la mesa por dentro) hechos de
+   desplegables grandes; la hora del día es el hilo que lo ordena todo. Un solo tema, claro. */
+:root{
+  color-scheme: light;
+  --papel:#fbfaf8; --tinta:#17171a; --gris:#5c5a60; --linea:#d9d6d2;
+  --rojo:#c8102e; --rojo-suave:#fbe9ec; --verde:#1d6b3a; --verde-suave:#e6f3ea; --blanco:#ffffff;
+  --display:'Barlow Condensed','Arial Narrow',Arial,sans-serif;
+  --cuerpo:'Atkinson Hyperlegible',Verdana,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--papel);color:var(--tinta);font-family:var(--cuerpo);font-size:19px;line-height:1.5}
+p,ul,ol,h1,h2,h3{margin:0}
+ul,ol{padding-left:1.2em;display:flex;flex-direction:column;gap:8px}
+a{color:var(--rojo)}
+:focus-visible{outline:3px solid var(--tinta);outline-offset:3px;border-radius:6px}
+.ancho{max-width:640px;margin:0 auto;padding:0 18px}
+
+header{background:var(--rojo);color:var(--blanco);padding:26px 0 24px}
+header .ancho{display:flex;flex-direction:column;gap:10px}
+.sobre{font-weight:700;letter-spacing:.08em;font-size:15px}
+h1{font-family:var(--display);font-size:54px;line-height:.98;text-wrap:balance}
+header p.lema{font-size:19px;max-width:30em}
+
+nav{position:sticky;top:0;z-index:5;background:var(--tinta)}
+nav .ancho{display:flex;gap:6px;padding-top:8px;padding-bottom:8px}
+nav a{flex:1;text-align:center;color:var(--blanco);text-decoration:none;font-weight:700;font-size:16px;padding:10px 6px;border-radius:8px;min-height:44px;display:flex;align-items:center;justify-content:center}
+nav a:hover{background:#34343a}
+
+main{display:flex;flex-direction:column;gap:34px;padding:26px 0 40px}
+section{display:flex;flex-direction:column;gap:14px}
+h2{font-family:var(--display);font-size:38px;line-height:1.05;text-wrap:balance}
+.intro{color:var(--gris)}
+
+.llama{display:flex;flex-direction:column;gap:12px;background:var(--tinta);color:var(--blanco);border-radius:14px;padding:16px 18px}
+.boton{display:flex;flex-direction:column;align-items:center;gap:2px;background:var(--rojo);color:var(--blanco);text-decoration:none;border-radius:12px;padding:16px 14px;min-height:76px;justify-content:center;text-align:center;box-shadow:0 4px 0 #8c0b20}
+.boton:active{transform:translateY(3px);box-shadow:0 1px 0 #8c0b20}
+.boton b{font-family:var(--display);font-size:34px;line-height:1.05}
+.boton span{font-size:15px}
+.boton:focus-visible{outline-color:var(--blanco)}
+
+details{background:var(--blanco);border:2px solid var(--tinta);border-radius:14px;overflow:hidden}
+summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:15px 16px;font-weight:700;font-size:20px;min-height:60px}
+summary::-webkit-details-marker{display:none}
+summary .hora{font-family:var(--display);font-size:26px;color:var(--rojo);min-width:66px;font-variant-numeric:tabular-nums;line-height:1}
+summary .txt{flex:1}
+summary .mas{flex:none;width:30px;height:30px;border-radius:50%;background:var(--tinta);color:var(--blanco);display:flex;align-items:center;justify-content:center;font-size:24px;line-height:1;transition:transform .2s}
+details[open] summary .mas{transform:rotate(45deg);background:var(--rojo)}
+details[open] summary{border-bottom:2px solid var(--linea)}
+.dentro{padding:16px;display:flex;flex-direction:column;gap:12px}
+.ahora{display:none;font-size:13px;letter-spacing:.06em;background:var(--rojo);color:var(--blanco);padding:3px 8px;border-radius:20px}
+details.es-ahora .ahora{display:inline-block}
+details.es-ahora{border-color:var(--rojo);box-shadow:0 0 0 3px var(--rojo-suave)}
+
+.lista-check{list-style:none;padding:0;gap:10px}
+.lista-check label{display:flex;gap:12px;align-items:center;min-height:44px;cursor:pointer}
+.lista-check input{width:28px;height:28px;accent-color:var(--verde);flex:none}
+.aviso{border-left:0;background:var(--rojo-suave);border-radius:10px;padding:12px 14px}
+.bien{background:var(--verde-suave);border-radius:10px;padding:12px 14px}
+.caso{display:flex;flex-direction:column;gap:2px;padding:12px 0;border-top:1px solid var(--linea)}
+.caso:first-child{border-top:0;padding-top:0}
+.caso strong{font-size:19px}
+.tres{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.voto{border:2px solid var(--tinta);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;font-size:17px}
+.voto h3{font-family:var(--display);font-size:26px;line-height:1}
+.voto.si h3{color:var(--verde)} .voto.no h3{color:var(--rojo)}
+.voto ul{gap:6px}
+.pasos{counter-reset:p;list-style:none;padding:0;gap:10px}
+.pasos li{counter-increment:p;display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start}
+.pasos li::before{content:counter(p);font-family:var(--display);font-size:22px;background:var(--tinta);color:var(--blanco);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.fases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.fases a{background:var(--blanco);border:2px solid var(--tinta);border-radius:12px;padding:12px 8px;text-decoration:none;color:var(--tinta);display:flex;flex-direction:column;gap:2px;text-align:center;font-weight:700;font-size:16px}
+.fases a b{font-family:var(--display);font-size:22px;color:var(--rojo);line-height:1.1}
+.separador{border-top:4px solid var(--tinta);padding-top:22px}
+footer{border-top:1px solid var(--linea);padding:20px 0 40px;color:var(--gris);font-size:16px}
+footer .ancho{display:flex;flex-direction:column;gap:8px}
+@media (max-width:400px){h1{font-size:46px}summary{font-size:19px}summary .hora{min-width:58px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}summary .mas{transition:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="ancho">
+    <p class="sobre">APODERADO · PSOE · DOMINGO 29 DE NOVIEMBRE</p>
+    <h1>Guía del apoderado</h1>
+    <p class="lema">Todo lo que tienes que saber para el día de la votación. Toca cada punto para abrirlo.</p>
+  </div>
+</header>
+
+<nav aria-label="Secciones">
+  <div class="ancho">
+    <a href="#esencial">Lo esencial</a>
+    <a href="#mesa">La mesa por dentro</a>
+    <a href="#coordinador">Llamar</a>
+  </div>
+</nav>
+
+<main class="ancho">
+
+<section id="esencial">
+  <h2>Lo esencial</h2>
+  <p class="intro">Si solo lees una parte, que sea esta.</p>
+
+  <details open>
+    <summary><span class="txt">Qué llevar</span><span class="mas" aria-hidden="true">+</span></summary>
+    <div class="dentro">
+      <ul class="lista-check">
+        <li><label for="c1"><input type="checkbox" id="c1"> Tu DNI</label></li>
+        <li><label for="c2"><input type="checkbox" id="c2"> Tu credencial de apoderado</label></li>
+        <li><label for="c3"><input type="checkbox" id="c3"> El colgante «Apoderado PSOE»</label></li>
+        <li><label for="c4"><input type="checkbox" id="c4"> El móvil cargado</label></li>
+        <li><label for="c5"><input type="checkbox" id="c5"> Un bolígrafo</label></li>
+      </ul>
+      <p class="aviso"><strong>Ropa normal.</strong> Sin camisetas, banderas ni pegatinas del partido. Solo vale el colgante.</p>
+    </div>
+  </details>
+
+  <details data-desde="0" data-hasta="540">
+    <summary><span class="hora">8:30</span><span class="txt">Antes de que abra el colegio <span class="ahora">AHORA</span></span><span class="mas" aria-hidden="true">+</span></summary>
+    <div class="dentro">
+      <ul>
+        <li>Llega al colegio a las 8:30.</li>
+        <li>Preséntate en cada mesa.</li>
+        <li>Enseña tu <strong>credencial</strong> y tu <strong>DNI</strong> al presidente.</li>
+        <li>Pide una <strong>copia del acta de constitución</strong> de la mesa. Es el papel que dice que la mesa está montada. Si hay interventor del PSOE, la pide él.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details data-desde="540" data-hasta="1200">
+    <summary><span class="hora">9:00</span><span class="txt">Empieza la votación <span class="ahora">AHORA</span></span><span class="mas" aria-hidden="true">+</span></summary>
+    <div class="dentro">
+      <ul>
+        <li>Quédate de pie, a la vista. Que se vea que el partido está en el colegio.</li>
+        <li>Saluda con educación.</li>
+        <li><strong>No pidas el voto a nadie.</strong> Dentro del colegio y en la puerta no se hace campaña.</li>
+        <li>Acuérdate de <strong>votar tú</strong>, en tu mesa de siempre.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details data-desde="540" data-hasta="1200">
+    <summary><span class="hora">Todo el día</span><span class="txt">Qué tienes que vigilar</span><span class="mas" aria-hidden="true">+</span></summary>
+    <div class="dentro">
+      <ul>
+        <li>Hay <strong>papeletas del PSOE</strong> en la cabina y junto a la mesa: <strong>blancas</strong> para el Congreso y <strong>sepia</strong> para el Senado.</li>
+        <li>Hay sobres de los dos colores.</li>
+        <li>La <strong>cabina</strong> tapa bien. El voto es secreto.</li>
+        <li><strong>Nadie</strong> hace propaganda ni presiona a los votantes.</li>
+        <li>Cada votante enseña DNI, pasaporte o carné de conducir.</li>
+      </ul>
+      <p class="bien">Mira las papeletas muchas veces. Se acaban o desaparecen sin que nadie avise.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="txt">Si pasa esto, haz esto</span><span class="mas" aria-hidden="true">+</span></summary>
+    <div class="dentro">
+      <div>
+        <div class="caso"><strong>Faltan papeletas del PSOE</strong><span>Avisa al presidente de la mesa. Llama al coordinador.</span></div>
+        <div class="caso"><strong>Alguien hace propaganda o presiona</strong><span>Avisa al presidente de la mesa. Él manda en el colegio.</span></div>
+        <div class="caso"><strong>La mesa duda del DNI de un votante</strong><span>El DNI caducado vale, si es el original y no una fotocopia. También vale la aplicación MiDNI en el móvil: la mesa tiene un lector para comprobarla.</span></div>
+        <div class="caso"><strong>No te dejan entrar o mirar</strong><span>Enseña credencial y DNI. Puedes entrar en todos los colegios y mirar la votación y el recuento.</span></div>
+        <div class="caso"><strong>No hay interventor del PSOE en una mesa</strong><span>Puedes hacer tú de interventor en esa mesa: hablar con la mesa, pero sin votar sus decisiones. Pregunta antes al coordinador.</span></div>
+        <div class="caso"><strong>No estás de acuerdo con algo</strong><span>Dilo con calma. Pide que se escriba en el acta. Llama al coordinador.</span></div>
+      </div>
+    </div>
+  </details>
+
+  <details data-desde="1200" data-hasta="1440">
+    <summary><span class="hora">20:00</span><span class="txt">El recuento <span class="ahora">AHORA</span></span><span class="mas" aria-hidden="true">+</span></summary>
+    <div class="dentro">
+      <ul>
+        <li>A las 20:00 se cierra. Votan los que ya están dentro.</li>
+        <li>Se meten en la urna los votos por correo.</li>
+        <li>Se cuenta <strong>primero el Congreso y luego el Senado</strong>.</li>
+        <li><strong>Tú miras.</strong> No tocas sobres ni papeletas sin permiso del presidente.</li>
+        <li>El presidente enseña cada papeleta. Si no la ves bien, pide verla.</li>
+        <li><strong>Tiene que haber tantos sobres como votantes apuntados.</strong> Si no cuadra, pide que se cuente otra vez.</li>
+        <li>Cuando la mesa termine de contar, <strong>puedes pedir al presidente contar tú las papeletas del PSOE</strong>, o las de otro partido. Pídelo antes de que se rompan.</li>
+        <li>Las papeletas nulas y las discutidas <strong>no se rompen</strong>. Se guardan.</li>
+        <li><strong>Quédate hasta el final.</strong> El Senado es más lento.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="txt">Voto válido, nulo o en blanco</span><span class="mas" aria-hidden="true">+</span></summary>
+    <div class="dentro">
+      <div class="tres">
+        <div class="voto si"><h3>VÁLIDO</h3><ul>
+          <li>Papeleta limpia.</li>
+          <li>Papeleta con una cruz o raya pequeña <strong>al lado</strong> de un nombre.</li>
+          <li>Dos papeletas iguales en un sobre: cuenta un voto.</li>
+        </ul></div>
+        <div class="voto no"><h3>NULO</h3><ul>
+          <li>Nombres tachados o algo escrito.</li>
+          <li>Papeleta sin sobre.</li>
+          <li>Sobre o papeleta que no es la oficial.</li>
+          <li>Congreso: papeletas de partidos distintos en un sobre.</li>
+        </ul></div>
+        <div class="voto"><h3>EN BLANCO</h3><ul>
+          <li>Sobre vacío.</li>
+        </ul></div>
+      </div>
+      <p class="aviso"><strong>En el Senado se marcan cruces.</strong> Hasta 3 cruces vale, aunque sean de partidos distintos. Con 4 o más, es nulo. Sin ninguna cruz, es blanco.</p>
+    </div>
+  </details>
+
+  <details data-desde="1200" data-hasta="1440">
+    <summary><span class="hora">Al acabar</span><span class="txt">Recoge los resultados</span><span class="mas" aria-hidden="true">+</span></summary>
+    <div class="dentro">
+      <ul>
+        <li>Pide una <strong>copia del acta de escrutinio</strong> de cada mesa. Es el papel con los votos de cada partido.</li>
+        <li>Entrégala al responsable de tu colegio.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="txt">Lo que nunca debes hacer</span><span class="mas" aria-hidden="true">+</span></summary>
+    <div class="dentro">
+      <ul>
+        <li>No pidas el voto.</li>
+        <li>No toques la urna.</li>
+        <li>No discutas a gritos.</li>
+        <li>No firmes actas. Las firma el interventor.</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<section id="coordinador">
+  <div class="llama">
+    <p>¿Dudas o problemas? <strong>Llama antes de discutir.</strong></p>
+    <a class="boton" id="llamar" href="#coordinador">
+      <b>Llamar al coordinador</b>
+      <span>Toca aquí para llamar</span>
+    </a>
+  </div>
+</section>
+
+<section id="mesa" class="separador">
+  <h2>La mesa por dentro</h2>
+  <p class="intro">Para saber cómo tiene que trabajar la mesa y notar si algo no se hace bien.</p>
+
+  <details>
+    <summary><span class="txt">Quién forma la mesa</span><span class="mas" aria-hidden="true">+</span></summary>
+    <div class="dentro">
+      <ul>
+        <li><strong>Un presidente o presidenta.</strong> Es la máxima autoridad del colegio.</li>
+        <li><strong>Dos vocales.</strong></li>
+        <li>Cada uno tiene dos suplentes, por si no se presenta.</li>
+      </ul>
+      <p>Los <strong>interventores</strong> de los partidos se sientan con la mesa y firman las actas. Los <strong>apoderados</strong> no forman parte de la mesa: se mueven por el colegio y vigilan.</p>
+    </div>
+  </details>
+
+  <p><strong>La jornada tiene 3 fases.</strong> Toca una para verla.</p>
+  <div class="fases">
+    <a href="#f1"><b>8:00 a 9:00</b>Constitución</a>
+    <a href="#f2"><b>9:00 a 20:00</b>Votación</a>
+    <a href="#f3"><b>Desde 20:00</b>Escrutinio</a>
+  </div>
+
+  <details id="f1">
+    <summary><span class="hora">8:00</span><span class="txt">Fase de constitución (8:00 a 9:00)</span><span class="mas" aria-hidden="true">+</span></summary>
+    <div class="dentro">
+      <p><strong>1. Se acreditan los interventores.</strong> La mesa comprueba quiénes son y recoge sus nombramientos.</p>
+      <p><strong>2. Se comprueba el material:</strong></p>
+      <ul>
+        <li>Urnas identificadas, cerradas y precintadas. Una para el Congreso y otra para el Senado.</li>
+        <li>Cabina de votación.</li>
+        <li>Sobres y papeletas, de color blanco y sepia.</li>
+        <li>Listas del censo.</li>
+        <li>Lista numerada de votantes.</li>
+        <li>Actas de constitución, de escrutinio y de sesión.</li>
+        <li>Certificados de votación y de asistencia.</li>
+        <li>Plantilla para contar los votos del Senado.</li>
+        <li>Copia de los nombramientos de interventores.</li>
+        <li>Juego de 3 sobres y recibos de entrega.</li>
+        <li>Aparato para leer la aplicación MiDNI.</li>
+      </ul>
+      <p><strong>3. Se comprueba que el local es accesible</strong> y, si lo hay, el material de voto accesible.</p>
+      <p><strong>4. Se hace el acta de constitución.</strong> La firman la mesa y los interventores. Cada candidatura puede pedir una copia.</p>
+    </div>
+  </details>
+
+  <details id="f2">
+    <summary><span class="hora">9:00</span><span class="txt">Fase de votación (9:00 a 20:00)</span><span class="mas" aria-hidden="true">+</span></summary>
+    <div class="dentro">
+      <p><strong>1. El votante se identifica.</strong> Siempre con un documento con foto:</p>
+      <ul>
+        <li>DNI. También vale en el móvil con la aplicación MiDNI.</li>
+        <li>Pasaporte.</li>
+        <li>Carné de conducir.</li>
+      </ul>
+      <p>Valen caducados, pero tienen que ser originales.</p>
+      <p><strong>2. Se le busca en el censo.</strong> Quien no está en el censo de la mesa no puede votar, salvo que traiga:</p>
+      <ul>
+        <li>Un certificado de alta en el censo.</li>
+        <li>Una sentencia judicial.</li>
+        <li>O sea interventor acreditado en esa mesa.</li>
+      </ul>
+      <p class="aviso"><strong>Quien pidió el voto por correo no puede votar en la mesa.</strong></p>
+      <p><strong>3. Vota.</strong></p>
+      <p><strong>Si faltan papeletas de un partido,</strong> la votación se interrumpe. Se avisa a la Junta Electoral de Zona, que trae más. Puede durar una hora como mucho, y ese tiempo se añade al final.</p>
+      <p><strong>Si es imposible seguir votando,</strong> la mesa puede suspender la votación, pero antes tiene que consultar a la Junta Electoral de Zona.</p>
+    </div>
+  </details>
+
+  <details id="f3">
+    <summary><span class="hora">20:00</span><span class="txt">Fase de escrutinio (desde las 20:00)</span><span class="mas" aria-hidden="true">+</span></summary>
+    <div class="dentro">
+      <p class="aviso"><strong>El recuento es público y no se puede parar.</strong></p>
+      <ol class="pasos">
+        <li><span><strong>Voto por correo.</strong> El presidente mete en la urna los sobres llegados por correo. Antes comprueba que traen el certificado del censo. Se apuntan en la lista de votantes.</span></li>
+        <li><span><strong>Votan la mesa y los interventores.</strong></span></li>
+        <li><span><strong>Se abre la urna.</strong> El presidente saca los sobres, lee cada papeleta y la enseña a vocales, interventores y apoderados. Primero el Congreso, luego el Senado.</span></li>
+        <li><span><strong>Los sobres se guardan</strong> para comprobar que hay tantos como votantes en la lista.</span></li>
+        <li><span><strong>El presidente pregunta</strong> si hay alguna protesta o reclamación.</span></li>
+        <li><span><strong>Se rompen las papeletas,</strong> menos las nulas y las reclamadas.</span></li>
+        <li><span><strong>Se anuncian los resultados</strong> en voz alta.</span></li>
+        <li><span><strong>Se rellenan el acta de escrutinio y el acta de sesión.</strong></span></li>
+        <li><span><strong>El acta de escrutinio se cuelga</strong> en la entrada del colegio.</span></li>
+      </ol>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="txt">Documentación electoral: los 3 sobres</span><span class="mas" aria-hidden="true">+</span></summary>
+    <div class="dentro">
+      <p>Al final, la mesa guarda los papeles en 3 sobres. Los cierran y los firman el presidente, los vocales y los interventores.</p>
+      <p><strong>Sobre 1</strong></p>
+      <ul>
+        <li>Acta de constitución de la mesa.</li>
+        <li>Acta de sesión.</li>
+        <li>Lista numerada de votantes.</li>
+        <li>Papeletas nulas o reclamadas, firmadas por detrás por la mesa.</li>
+        <li>Listas del censo usadas.</li>
+        <li>Certificados del censo y sentencias que se hayan presentado.</li>
+        <li>Copias de los nombramientos de interventores.</li>
+        <li>Solicitudes de reintegro de gastos del voto por correo desde el extranjero, si las hay.</li>
+      </ul>
+      <p><strong>Sobres 2 y 3</strong></p>
+      <ul>
+        <li>Copia del acta de constitución.</li>
+        <li>Copia del acta de sesión.</li>
+      </ul>
+      <p class="bien"><strong>A dónde van:</strong> el presidente lleva los sobres 1 y 2 al juzgado (Tribunal de Instancia u Oficina de Justicia). El sobre 3 se entrega al cartero de Correos en el colegio.</p>
+    </div>
+  </details>
+</section>
+
+</main>
+
+<footer>
+  <div class="ancho">
+    <p>Guía interna para apoderados. Resume el manual oficial para las Mesas de las elecciones a Cortes Generales 2026.</p>
+    <p>Manual oficial completo: <a href="https://29neleccionesgenerales.es">29neleccionesgenerales.es</a></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Recuerda las casillas de "Qué llevar" en este móvil.
+  var cajas = document.querySelectorAll('.lista-check input');
+  cajas.forEach(function (c) {
+    try { c.checked = localStorage.getItem('apo-' + c.id) === '1'; } catch (e) {}
+    c.addEventListener('change', function () {
+      try { localStorage.setItem('apo-' + c.id, c.checked ? '1' : '0'); } catch (e) {}
+    });
+  });
+
+  // El domingo 29, marca y abre el momento del día que toca.
+  var hoy = new Date();
+  if (hoy.getFullYear() === 2026 && hoy.getMonth() === 10 && hoy.getDate() === 29) {
+    var min = hoy.getHours() * 60 + hoy.getMinutes();
+    document.querySelectorAll('details[data-desde]').forEach(function (d) {
+      if (min >= +d.dataset.desde && min < +d.dataset.hasta) { d.classList.add('es-ahora'); d.open = true; }
+    });
+  }
+
+  // El botón de llamar monta el número al tocarlo, para que no quede escrito a la vista.
+  var llamar = document.getElementById('llamar');
+  if (llamar) llamar.addEventListener('click', function (e) {
+    e.preventDefault();
+    window.location.href = 'tel:+34' + ['673', '880', '901'].join('');
+  });
+
+  // Al tocar una fase, abre su desplegable.
+  document.querySelectorAll('.fases a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var d = document.querySelector(a.getAttribute('href'));
+      if (d) d.open = true;
+    });
+  });
+})();
+</script>
+</body>
+</html>
