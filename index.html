@@ -18,6 +18,7 @@
   --cuerpo:'Atkinson Hyperlegible',Verdana,Arial,sans-serif;
 }
 *{box-sizing:border-box}
+[hidden]{display:none !important}
 html{scroll-behavior:smooth;scroll-padding-top:70px}
 body{margin:0;background:var(--papel);color:var(--tinta);font-family:var(--cuerpo);font-size:19px;line-height:1.5}
 p,ul,ol,h1,h2,h3{margin:0}
@@ -34,8 +35,9 @@ header p.lema{font-size:19px;max-width:30em}
 
 nav{position:sticky;top:0;z-index:5;background:var(--tinta)}
 nav .ancho{display:flex;gap:6px;padding-top:8px;padding-bottom:8px}
-nav a{flex:1;text-align:center;color:var(--blanco);text-decoration:none;font-weight:700;font-size:16px;padding:10px 6px;border-radius:8px;min-height:44px;display:flex;align-items:center;justify-content:center}
+nav a{flex:1;text-align:center;color:var(--blanco);text-decoration:none;font-weight:700;font-size:15px;line-height:1.15;padding:8px 6px;border-radius:8px;min-height:48px;display:flex;align-items:center;justify-content:center}
 nav a:hover{background:#34343a}
+nav a[aria-current="true"]{background:var(--blanco);color:var(--tinta)}
 
 main{display:flex;flex-direction:column;gap:34px;padding:26px 0 40px}
 section{display:flex;flex-direction:column;gap:14px}
@@ -99,9 +101,9 @@ footer .ancho{display:flex;flex-direction:column;gap:8px}
 
 <nav aria-label="Secciones">
   <div class="ancho">
-    <a href="#esencial">Lo esencial</a>
-    <a href="#mesa">La mesa por dentro</a>
-    <a href="#coordinador">Llamar</a>
+    <a href="#esencial" data-tab="esencial" aria-current="true">Lo esencial</a>
+    <a href="#mesa" data-tab="mesa">La mesa por dentro</a>
+    <a href="#coordinador">Teléfono incidencias</a>
   </div>
 </nav>
 
@@ -167,12 +169,12 @@ footer .ancho{display:flex;flex-direction:column;gap:8px}
     <summary><span class="txt">Si pasa esto, haz esto</span><span class="mas" aria-hidden="true">+</span></summary>
     <div class="dentro">
       <div>
-        <div class="caso"><strong>Faltan papeletas del PSOE</strong><span>Avisa al presidente de la mesa. Llama al coordinador.</span></div>
+        <div class="caso"><strong>Faltan papeletas del PSOE</strong><span>Avisa al presidente de la mesa. <a href="#coordinador">Llama al coordinador.</a></span></div>
         <div class="caso"><strong>Alguien hace propaganda o presiona</strong><span>Avisa al presidente de la mesa. Él manda en el colegio.</span></div>
         <div class="caso"><strong>La mesa duda del DNI de un votante</strong><span>El DNI caducado vale, si es el original y no una fotocopia. También vale la aplicación MiDNI en el móvil: la mesa tiene un lector para comprobarla.</span></div>
         <div class="caso"><strong>No te dejan entrar o mirar</strong><span>Enseña credencial y DNI. Puedes entrar en todos los colegios y mirar la votación y el recuento.</span></div>
-        <div class="caso"><strong>No hay interventor del PSOE en una mesa</strong><span>Puedes hacer tú de interventor en esa mesa: hablar con la mesa, pero sin votar sus decisiones. Pregunta antes al coordinador.</span></div>
-        <div class="caso"><strong>No estás de acuerdo con algo</strong><span>Dilo con calma. Pide que se escriba en el acta. Llama al coordinador.</span></div>
+        <div class="caso"><strong>No hay interventor del PSOE en una mesa</strong><span>Puedes hacer tú de interventor en esa mesa: hablar con la mesa, pero sin votar sus decisiones. <a href="#coordinador">Pregunta antes al coordinador.</a></span></div>
+        <div class="caso"><strong>No estás de acuerdo con algo</strong><span>Dilo con calma. Pide que se escriba en el acta. <a href="#coordinador">Llama al coordinador.</a></span></div>
       </div>
     </div>
   </details>
@@ -240,17 +242,9 @@ footer .ancho{display:flex;flex-direction:column;gap:8px}
   </details>
 </section>
 
-<section id="coordinador">
-  <div class="llama">
-    <p>¿Dudas o problemas? <strong>Llama antes de discutir.</strong></p>
-    <a class="boton" id="llamar" href="#coordinador">
-      <b>Llamar al coordinador</b>
-      <span>Toca aquí para llamar</span>
-    </a>
-  </div>
-</section>
 
-<section id="mesa" class="separador">
+
+<section id="mesa">
   <h2>La mesa por dentro</h2>
   <p class="intro">Para saber cómo tiene que trabajar la mesa y notar si algo no se hace bien.</p>
 
@@ -362,6 +356,16 @@ footer .ancho{display:flex;flex-direction:column;gap:8px}
   </details>
 </section>
 
+<section id="coordinador">
+  <div class="llama">
+    <p>¿Dudas o problemas? <strong>Llama antes de discutir.</strong></p>
+    <a class="boton" id="llamar" href="#coordinador">
+      <b>Llamar al coordinador</b>
+      <span>Toca aquí para llamar</span>
+    </a>
+  </div>
+</section>
+
 </main>
 
 <footer>
@@ -396,6 +400,30 @@ footer .ancho{display:flex;flex-direction:column;gap:8px}
   if (llamar) llamar.addEventListener('click', function (e) {
     e.preventDefault();
     window.location.href = 'tel:+34' + ['673', '880', '901'].join('');
+  });
+
+  // Pestañas: se ve solo "Lo esencial" o solo "La mesa por dentro".
+  var pestanas = ['esencial', 'mesa'];
+  function mostrar(cual) {
+    pestanas.forEach(function (id) {
+      document.getElementById(id).hidden = id !== cual;
+      var a = document.querySelector('nav a[data-tab="' + id + '"]');
+      if (id === cual) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+  }
+  function segunHash() {
+    var h = location.hash.replace('#', '');
+    if (h === 'mesa' || h === 'f1' || h === 'f2' || h === 'f3') mostrar('mesa');
+    else if (h === 'esencial') mostrar('esencial');
+  }
+  mostrar('esencial');
+  segunHash();
+  window.addEventListener('hashchange', segunHash);
+  document.querySelectorAll('nav a[data-tab]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      mostrar(a.dataset.tab);
+      window.scrollTo(0, 0);
+    });
   });
 
   // Al tocar una fase, abre su desplegable.
